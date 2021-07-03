@@ -1,0 +1,31 @@
+<div class="md:block md:fixed md:left-0 md:top-0 md:bottom-0 md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-indigo-100 flex flex-wrap items-center justify-between relative md:w-1/5 z-40 py-4 px-6">
+    <div class="flex flex-row items-center justify-center w-full h-10 bg-indigo-100">
+        <a routerLink="/" class="text-lg font-bold uppercase text-indigo-600" (click)="changeTitle('Risk Management')">
+            Risk Management
+        </a>
+    </div>
+    <hr class="my-4 md:min-w-full bg-indigo-600 h-1">
+    <nav class="md:overflow-y-auto">
+        <ul>
+            <li>
+                <a class="flex flex-row justify-items-start items-center w-full px-2" routerLink="/ecosystem" routerLinkActive="text-indigo-600" [matMenuTriggerFor]="ecosys" >
+                    <img src="/assets/images/logo_ecosys.png" alt="">
+                    <span class="ml-2 text-center text-base" >Ecosystème client</span>
+                    <fa-icon class="ml-auto" [icon]="chevron_right"></fa-icon>
+                </a>
+                <mat-menu #ecosys="matMenu" class="px-2 absolute submenu" xPosition="before" yPosition="above">
+                    <a mat-menu-item routerLink="/client-selection" routerLinkActive="active_link" (click)="changeTitle('Sélection client')">
+                        <span class="text-base">Sélection client</span>
+                    </a>
+                    <a mat-menu-item routerLink="/know-client" routerLinkActive="active_link" (click)="changeTitle('Know your client')">
+                        <span class="text-base">Know your client</span>
+                    </a>
+                    <a mat-menu-item routerLink="client-file" routerLinkActive="active_link" (click)="changeTitle('Fichier client')">
+                        <span class="text-base">Fichier client</span>
+                    </a>
+                </mat-menu>
+            </li>
+        </ul>
+    </nav>
+</div>
+

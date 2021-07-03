@@ -1,0 +1,17 @@
+<header class="fixed z-40 top-0 right-0 w-4/5 h-20 bg-indigo-600 shadow-md flex items-center px-4">
+    <div class="grid grid-cols-3 w-full">
+        <div  class="text-white col-start-2 justify-self-center text-xl">{{title}}</div>
+        <div class="col-start-3 justify-self-end flex">
+            <a href="">
+                <fa-icon class="text-white text-xl font-bold text-lg" [icon]="bell_icon"></fa-icon>
+            </a>
+            <a href="" class="text-white ml-4">
+                <fa-icon class="text-lg" [icon]="user_icon"></fa-icon>
+                <span class="ml-1">LSE</span>
+            </a>
+            <a href="">
+                <fa-icon class="text-white ml-4 text-lg" [icon]="logout_icon"></fa-icon>
+            </a>
+        </div>
+    </div>
+</header>

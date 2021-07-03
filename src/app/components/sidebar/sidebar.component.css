@@ -1,0 +1,7 @@
+::ng-deep .submenu {
+    @apply bg-indigo-100;
+}
+
+.active_link {
+    @apply text-indigo-500;
+}
