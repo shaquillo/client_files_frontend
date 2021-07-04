@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faChevronDown, faSun, faPlus, faPaperclip, faSearch, faEye, faStar, faCertificate, faCloudMoonRain, faCircle } from '@fortawesome/free-solid-svg-icons';
 import  { faTimesCircle, faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 import * as Highcharts from "highcharts";
@@ -17,14 +17,52 @@ import { ClientService } from './client-file.service';
 })
 export class ClientFileComponent implements OnInit {
 
+   clientData = this.formBuilder.group({
+    id: '',
+    name: '',
+    profession: '',
+    category: '', 
+    tel: '',
+    email: '', 
+    address: '',
+    town: '',
+    linkedIn: '',
+    cp: '',
+    notation: '',
+    notes: [
+      {
+        id: '',
+        date: '',
+        note: '',
+        status: '',
+        doc_status: '',
+        offer: '',
+        offer_date: '',
+      }
+    ],
+    account: {
+      score: '',
+      ratio: '',
+      risk: '',
+      status: '',
+      investment_plan: ''
+    }
+   });
+
+   onSubmit(){
+    console.warn('Your order has been submitted', this.clientData.value);
+    // this.addClient(this.clientData.value);
+    this.clientData.reset();
+   }
+
   clients: Client[] = [];
 
   getClients(): void {
     this.clientService.getClients().subscribe(clients => (this.clients = clients));
   }
 
-  addClient(): void {
-    
+  addClient(client: Client): void {
+    this.clientService.postClient(client).subscribe(client => this.clients.push(client));
   }
 
 
@@ -105,7 +143,7 @@ export class ClientFileComponent implements OnInit {
   risk_icon = faCloudMoonRain;
   status_icon = faCircle;
 
-  constructor(private clientService: ClientService) { 
+  constructor(private clientService: ClientService, private formBuilder: FormBuilder) { 
     this.getClients();
   }
 
