@@ -6,7 +6,7 @@ import {FormBuilder, FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
 import * as Highcharts from "highcharts";
-import {Account, Note, Client} from './client-file.client';
+import {Account, Note, Client, Status} from './client-file.client';
 import { ClientService } from './client-file.service';
 
 @Component({
@@ -17,42 +17,22 @@ import { ClientService } from './client-file.service';
 })
 export class ClientFileComponent implements OnInit {
 
-   clientData = this.formBuilder.group({
-    id: '',
-    name: '',
-    profession: '',
-    category: '', 
-    tel: '',
-    email: '', 
-    address: '',
-    town: '',
-    linkedIn: '',
-    cp: '',
-    notation: '',
-    notes: [
-      {
-        id: '',
-        date: '',
-        note: '',
-        status: '',
-        doc_status: '',
-        offer: '',
-        offer_date: '',
-      }
-    ],
-    account: {
-      score: '',
-      ratio: '',
-      risk: '',
+   noteForm = this.formBuilder.group({
+      id: '',
+      date: '',
+      note: '',
       status: '',
-      investment_plan: ''
-    }
+      document_status: '',
+      document_link: '',
+      offer: '',
+      offer_date: '',
    });
 
    onSubmit(){
-    console.warn('Your order has been submitted', this.clientData.value);
+    console.warn('Your order has been submitted', this.noteForm.value);
+    this.getClients;
     // this.addClient(this.clientData.value);
-    this.clientData.reset();
+    this.noteForm.reset();
    }
 
   clients: Client[] = [];
@@ -65,10 +45,14 @@ export class ClientFileComponent implements OnInit {
     this.clientService.postClient(client).subscribe(client => this.clients.push(client));
   }
 
+  updateClient(client: Client): void {
+    this.clientService.updateClient(client);
+  }
+
 
   control = new FormControl();
 
-  clients_name: string[] = [];
+  clients_name: string[] = ["Marry", "Joseph", "Riyad", "Francis", "Fred"];
 
   filteredClients: Observable<string[]> = this.control.valueChanges.pipe(startWith(''),
     map(value => this._filter(value)));
@@ -143,8 +127,51 @@ export class ClientFileComponent implements OnInit {
   risk_icon = faCloudMoonRain;
   status_icon = faCircle;
 
+  client: Client = {
+    id: "",
+    name: "Riyad",
+    profession: "Student",
+    category: "Engineer", 
+    tel: "671090017",
+    email: "mail@mail.com", 
+    address: "Street 5",
+    town: "Adamawa",
+    linkedIn_link: "linked.com/riyad",
+    cp: "8990",
+    notation: 1,
+    notes: [
+      {
+        creation_date: "2021-09-13",
+        note: "First note",
+        status: Status.PENDING,
+        document_status: Status.PENDING,
+        document_link: "/assets/file",
+        offer: "New money demand",
+        offer_date: "2020-08-12"
+      },
+      {
+        creation_date: "2021-09-05",
+        note: "Second note",
+        status: Status.INPROGRESS,
+        document_status: Status.PENDING,
+        document_link: "/assets/file",
+        offer: "New money demand",
+        offer_date: "2020-08-12"
+      }
+    ],
+    account: {
+      score: 2,
+      ratio: 2,
+      risk: 2,
+      status: Status.PENDING,
+      investment_plan: "continous"
+    }
+  } ;
+
   constructor(private clientService: ClientService, private formBuilder: FormBuilder) { 
     this.getClients();
+    // this.client = this.clients[0];
+    console.log("clients: " + this.clients.length);
   }
 
   ngOnInit(): void {

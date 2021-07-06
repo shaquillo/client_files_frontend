@@ -1,5 +1,5 @@
 .client_selection_input {
-    @apply rounded h-8 static z-10;
+    @apply rounded h-8 static z-10 pr-5;
 }
 
 .client_form {
@@ -101,7 +101,11 @@
 }
 
 .doc_icon {
-    @apply text-sm;
+    @apply text-sm cursor-pointer;
+}
+
+.select_icon {
+    @apply w-1 h-1 float-left;
 }
 
 .doc_button {

@@ -56,13 +56,13 @@ export interface Account {
 }
 
 export interface Note {
-    id: string,
-    date: String,
+    creation_date: string,
     note: string,
-    status: string,
-    doc_status: string,
+    status: Status,
+    document_status: Status,
+    document_link: string,
     offer: string,
-    offer_date: String
+    offer_date: string
 }
 
 export interface Client {
@@ -74,7 +74,7 @@ export interface Client {
     email: string, 
     address: string,
     town: string,
-    linkedIn: string,
+    linkedIn_link: string,
     cp: string,
     notation: number,
     notes: Note[],
