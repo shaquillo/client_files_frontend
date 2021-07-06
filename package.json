@@ -27,6 +27,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@popperjs/core": "2.4.4",
+    "express": "^4.17.1",
     "highcharts": "^9.1.2",
     "highcharts-angular": "^2.10.0",
     "rxjs": "~6.6.0",
