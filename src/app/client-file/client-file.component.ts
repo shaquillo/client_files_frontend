@@ -8,6 +8,7 @@ import {startWith, map} from 'rxjs/operators';
 import * as Highcharts from "highcharts";
 import {Account, Note, Client, Status} from './client-file.client';
 import { ClientService } from './client-file.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-file',
@@ -18,27 +19,81 @@ import { ClientService } from './client-file.service';
 export class ClientFileComponent implements OnInit {
 
    noteForm = this.formBuilder.group({
-      id: '',
-      date: '',
+      creation_date: '',
       note: '',
       status: '',
       document_status: '',
-      document_link: '',
+      file: null,
+      filename: '',
       offer: '',
       offer_date: '',
    });
 
+   clientInfo = this.formBuilder.group({
+    name: '',
+    profession: '',
+    category: '', 
+    tel: '',
+    email: '', 
+    address: '',
+    town: '',
+    linkedIn_link: '',
+    cp: '',
+    notation: '',
+   });
+
+   status = {
+     inprogress: "INPROGRESS",
+     pending: "PENDING",
+     treated: "TREATED"
+   }
+
    onSubmit(){
-    console.warn('Your order has been submitted', this.noteForm.value);
-    this.getClients;
-    // this.addClient(this.clientData.value);
+    console.warn('Submitted client form: ', this.clientInfo.value);
+    console.warn('Submitted selected client form: ', this.selected_client);
+    let today = new Date().toLocaleDateString();
+    this.noteForm.value.creation_date = this.datepipe.transform(today, 'dd-MM-yyyy');
+    this.noteForm.value.offer_date = this.datepipe.transform(this.noteForm.value.offer_date, 'dd-MM-yyyy');
+    console.warn('Submitted note form: ', this.noteForm.value);
+    // this.getClients;
+    this.selected_client.notes.push(this.noteForm.value);
+    this.addClient(this.selected_client);
     this.noteForm.reset();
    }
 
   clients: Client[] = [];
 
+  selected_client: Client;
+
+  empty_client: Client = {
+    id: "",
+    name: "",
+    profession: "",
+    category: "", 
+    tel: "",
+    email: "", 
+    address: "",
+    town: "Adamawa",
+    linkedIn_link: "",
+    cp: "",
+    notation: 0,
+    notes: [],
+    account: {
+      score: 0,
+      ratio: 0,
+      risk: 0,
+      status: Status.PENDING,
+      investment_plan: "continous"
+    }
+  } ;
+
   getClients(): void {
-    this.clientService.getClients().subscribe(clients => (this.clients = clients));
+    this.clientService.getClients().subscribe(clients => {
+      console.log(clients);
+      this.clients = clients;
+      console.log("clients: " + this.clients.length);
+      this.setClientsName();
+    });
   }
 
   addClient(client: Client): void {
@@ -52,12 +107,18 @@ export class ClientFileComponent implements OnInit {
 
   control = new FormControl();
 
-  clients_name: string[] = ["Marry", "Joseph", "Riyad", "Francis", "Fred"];
+  clients_name: string[] = [];
 
   filteredClients: Observable<string[]> = this.control.valueChanges.pipe(startWith(''),
     map(value => this._filter(value)));
   
   private _filter(value: string): string[] {
+    let client_to_select = this.clients.find(client => client.name === value);
+    if( client_to_select !== undefined){
+      this.selected_client = client_to_select;
+    } else {
+      this.selected_client = this.empty_client ;
+    }
     const filterValue = this._normalizeValue(value);
     return this.clients_name.filter(client => this._normalizeValue(client).includes(filterValue));
   }
@@ -143,18 +204,20 @@ export class ClientFileComponent implements OnInit {
       {
         creation_date: "2021-09-13",
         note: "First note",
-        status: Status.PENDING,
-        document_status: Status.PENDING,
-        document_link: "/assets/file",
+        status: "PENDING",
+        document_status: "PENDING",
+        file: new File([''], '', {}),
+        filename: "/assets/file",
         offer: "New money demand",
         offer_date: "2020-08-12"
       },
       {
         creation_date: "2021-09-05",
         note: "Second note",
-        status: Status.INPROGRESS,
-        document_status: Status.PENDING,
-        document_link: "/assets/file",
+        status: "INPROGRESS",
+        document_status: "PENDING",
+        file: new File([''], '', {}),
+        filename: "/assets/file",
         offer: "New money demand",
         offer_date: "2020-08-12"
       }
@@ -168,10 +231,11 @@ export class ClientFileComponent implements OnInit {
     }
   } ;
 
-  constructor(private clientService: ClientService, private formBuilder: FormBuilder) { 
+  constructor(private clientService: ClientService, private formBuilder: FormBuilder, private datepipe: DatePipe) { 
     this.getClients();
+    this.selected_client = this.empty_client;
     // this.client = this.clients[0];
-    console.log("clients: " + this.clients.length);
+    // console.log("clients: " + this.clients.length);
   }
 
   ngOnInit(): void {
@@ -179,6 +243,13 @@ export class ClientFileComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value))
     );
+  }
+
+  setClientsName(){
+    this.clients_name = []
+    for(let client of this.clients){
+      this.clients_name.push(client.name);
+    }
   }
 
 

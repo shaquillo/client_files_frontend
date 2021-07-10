@@ -58,9 +58,10 @@ export interface Account {
 export interface Note {
     creation_date: string,
     note: string,
-    status: Status,
-    document_status: Status,
-    document_link: string,
+    status: string,
+    document_status: string,
+    file: File,
+    filename: string,
     offer: string,
     offer_date: string
 }
@@ -81,3 +82,45 @@ export interface Client {
     account: Account
 
 }
+
+
+// export class AccountC implements Account{
+//     constructor(
+//         public score: number,
+//         public ratio: number,
+//         public risk: number,
+//         public status: Status,
+//         public investment_plan: string
+//     ){}
+// }
+
+// export class Notec implements Note{
+//     constructor(
+//         public creation_date: string,
+//         public note: string,
+//         public status: Status,
+//         public document_status: Status,
+//         public document_link: string,
+//         public offer: string,
+//         public offer_date: string
+//     ){}
+// }
+
+// export class ClientC implements Client {
+//     constructor(
+//         public id: string,
+//         public name: string,
+//         public profession: string,
+//         public category: string, 
+//         public tel: string,
+//         public email: string, 
+//         public address: string,
+//         public town: string,
+//         public linkedIn_link: string,
+//         public cp: string,
+//         public notation: number,
+//         public notes: Note[],
+//         public account: Account
+
+//     ){}
+// }

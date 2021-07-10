@@ -6,8 +6,7 @@ import { Client } from './client-file.client';
 
 const headers = new HttpHeaders()
     .set("Content-Type", "application/json")
-    .set("Accept", "*/*")
-    .set("Access-Control-Allow-Origin", "http://localhost:4200");
+    .set("Accept", "*/*");
 
 @Injectable()
 export class ClientService {
@@ -16,6 +15,8 @@ export class ClientService {
 
   private clientUrl = 'https://client-file.herokuapp.com/risk-management/client';
   // private clientUrl = 'http://localhost:8085/risk-management/client';
+
+  private noteDocUrl = this.clientUrl + 'note/file/';
 
   getClients(): Observable<Client[]> {
       return this.http.get<Client[]>(this.clientUrl, {headers}).pipe(
@@ -26,16 +27,23 @@ export class ClientService {
 
   postClient(client: Client): Observable<Client> {
       return this.http.post<Client>(this.clientUrl, client, {headers}).pipe(
-        tap(_ => console.log('fetched heroes')),
-        catchError(this.handleError<Client>('getClients'))
+        tap(_ => console.log('post clients')),
+        catchError(this.handleError<Client>('postClients'))
       );
   }
 
   updateClient(client: Client): Observable<Client> {
     return this.http.put<Client>(this.clientUrl, client, {headers}).pipe(
-      tap(_ => console.log('fetched heroes')),
-      catchError(this.handleError<Client>('getClients'))
+      tap(_ => console.log('update clients')),
+      catchError(this.handleError<Client>('updateClients'))
     );
+}
+
+downloadNoteDoc(filename: String): Observable<any> {
+  return this.http.get(this.noteDocUrl + filename, {headers}).pipe(
+    tap(_ => console.log('downloading note doc clients')),
+    catchError(this.handleError<Client>('downloadNoteDoc'))
+  );
 }
 
   private handleError<T>(operation = 'operation', result?: T) {
