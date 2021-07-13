@@ -52,6 +52,7 @@ export class ClientFileComponent implements OnInit {
 
    onSelectFile(event: any){
      this.file = event.target.files[0];
+     console.log(this.file);
    }
 
    noteSubmittion(){
@@ -62,6 +63,9 @@ export class ClientFileComponent implements OnInit {
       console.log('adding client');
       this.addClient(this.selected_client);
     }
+    
+    this.noteForm.reset();
+    this.getClients();
    }
 
     onSubmit(){
@@ -76,6 +80,7 @@ export class ClientFileComponent implements OnInit {
     
     // this.noteForm.value.file = this.noteForm.value.file.data;
 
+    console.log(this.file);
     
     if(this.file !== null && this.file !== undefined){
       this.clientService.uploadNoteDoc(this.file).subscribe(respons => {
@@ -95,7 +100,6 @@ export class ClientFileComponent implements OnInit {
     
     // this.setSelectedClient(this.client_selected_name);
     // this.selected_client.notes.push(this.noteForm.value);
-    this.noteForm.reset();
    }
 
   clients: Client[] = [];
@@ -134,7 +138,11 @@ export class ClientFileComponent implements OnInit {
   }
 
   addClient(client: Client) {
-    this.clientService.postClient(client).subscribe(client => this.clients.push(client));
+    this.clientService.postClient(client).subscribe(client => {
+      this.clients.push(client)
+      // this.added_client_name = client.name;
+      // this.setSelectedClient(this.added_client_name);
+    });
   }
 
   updateClient(client: Client) {
@@ -158,6 +166,7 @@ export class ClientFileComponent implements OnInit {
   clients_name: string[] = [];
 
   client_selected_name:string = '';
+  // added_client_name:string = '';
 
   filteredClients: Observable<string[]> = this.control.valueChanges.pipe(startWith(''),
     map(value => this._filter(value)));
@@ -260,13 +269,13 @@ export class ClientFileComponent implements OnInit {
     }
   }
 
-  // setSelectedClient(name:string): void{
-  //   for(let client of this.clients){
-  //     if(client.name === name){
-  //       this.selected_client = client;
-  //     }
-  //   }
-  // }
+  setSelectedClient(name:string): void{
+    for(let client of this.clients){
+      if(client.name === name){
+        this.selected_client = client;
+      }
+    }
+  }
 
 
 }

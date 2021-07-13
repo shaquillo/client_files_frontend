@@ -197,7 +197,7 @@
                                 <div class="mr-auto">
                                     {{ note.document_status }}
                                 </div>
-                                <div *ngIf="note.document_status === status.treated" class="flex">
+                                <div *ngIf="note.document_status === status.treated || (note.filename !== '' && note.filename !== null)" class="flex">
                                     <label class="cursor-pointer mr-2" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
                                     <input class="hidden w-0" id="file_upload" type="file" />
                                     <fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon>
