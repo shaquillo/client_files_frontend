@@ -2,19 +2,14 @@
     <div class="w-full flex justify-center items-center mt-3">
         <span class="mr-5 text-base">Sélectionner client: </span>
         <form class="">
-            <input class="client_selection_input"
-                   type="text"
-                   id="selection_input"
-                   placeholder="Saisir client"
-                   [formControl]="control"
-                   [matAutocomplete]="auto">
-                   <label class="cursor-pointer" for="selection_input"><fa-icon class="relative right-5 z-0" [icon]="chevron_down"></fa-icon></label>
+            <input class="client_selection_input" type="text" id="selection_input" placeholder="Saisir client" [formControl]="control" [matAutocomplete]="auto">
+            <label class="cursor-pointer" for="selection_input"><fa-icon class="relative right-5 z-0" [icon]="chevron_down"></fa-icon></label>
             <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let client of filteredClients | async" [value]="client">
-                {{client}}
-              </mat-option>
+                <mat-option *ngFor="let client of filteredClients | async" [value]="client">
+                    {{client}}
+                </mat-option>
             </mat-autocomplete>
-          </form>
+        </form>
     </div>
     <div>
         <form [formGroup]="clientInfo" class="client_form">
@@ -31,7 +26,7 @@
                     <label for="profession" class="client_form_label">
                         Profession:
                     </label>
-                    <input type="text" name="profession" formControlName="profession" [(ngModel)]="selected_client.profession"  id="profession" class="client_form_input" placeholder="profession">
+                    <input type="text" name="profession" formControlName="profession" [(ngModel)]="selected_client.profession" id="profession" class="client_form_input" placeholder="profession">
                 </div>
             </div>
             <div class="col-span-3 col-start-1">
@@ -39,7 +34,7 @@
                     <label for="category" class="client_form_label">
                         Category:
                     </label>
-                    <input type="text" name="category" formControlName="category" [(ngModel)]="selected_client.category"  id="category" class="client_form_input" placeholder="category">
+                    <input type="text" name="category" formControlName="category" [(ngModel)]="selected_client.category" id="category" class="client_form_input" placeholder="category">
                 </div>
             </div>
 
@@ -48,7 +43,7 @@
                     <label for="tel" class="client_form_label">
                         Tel:
                     </label>
-                    <input type="tel" name="tel" formControlName="tel" [(ngModel)]="selected_client.tel"  id="tel" class="client_form_input" placeholder="tel">
+                    <input type="tel" name="tel" formControlName="tel" [(ngModel)]="selected_client.tel" id="tel" class="client_form_input" placeholder="tel">
                 </div>
             </div>
             <div class="col-span-3 col-start-7">
@@ -56,7 +51,7 @@
                     <label for="email" class="client_form_label">
                         Email:
                     </label>
-                    <input type="email" name="email" formControlName="email" [(ngModel)]="selected_client.email"  id="email" class="client_form_input" placeholder="email">
+                    <input type="email" name="email" formControlName="email" [(ngModel)]="selected_client.email" id="email" class="client_form_input" placeholder="email">
                 </div>
             </div>
             <div class="col-span-2 col-start-1">
@@ -64,7 +59,7 @@
                     <label for="address" class="client_form_label">
                         Address:
                     </label>
-                    <input type="text" name="address" formControlName="address" [(ngModel)]="selected_client.address"  id="address" class="client_form_input" placeholder="address">
+                    <input type="text" name="address" formControlName="address" [(ngModel)]="selected_client.address" id="address" class="client_form_input" placeholder="address">
                 </div>
             </div>
 
@@ -73,7 +68,7 @@
                     <label for="ville" class="client_form_label">
                         Ville:
                     </label>
-                    <input type="text" name="town" formControlName="town" id="ville" [(ngModel)]="selected_client.town"  class="client_form_input" placeholder="ville">
+                    <input type="text" name="town" formControlName="town" id="ville" [(ngModel)]="selected_client.town" class="client_form_input" placeholder="ville">
                 </div>
             </div>
             <div class="col-span-2 col-start-5">
@@ -81,7 +76,7 @@
                     <label for="linkedin" class="client_form_label">
                         <fa-icon class="text-lg" [icon]="linked_icon"></fa-icon>
                     </label>
-                    <input type="text" name="linkedIn_link" formControlName="linkedIn_link" [(ngModel)]="selected_client.linkedIn_link"  id="linkedin" class="client_form_input" placeholder="linkedin">
+                    <input type="text" name="linkedIn_link" formControlName="linkedIn_link" [(ngModel)]="selected_client.linkedIn_link" id="linkedin" class="client_form_input" placeholder="linkedin">
                 </div>
             </div>
             <div class="col-span-1 col-start-7">
@@ -89,7 +84,7 @@
                     <label for="cp" class="client_form_label">
                         CP:
                     </label>
-                    <input type="text" name="cp" formControlName="cp" [(ngModel)]="selected_client.cp"  id="cp" class="client_form_input" placeholder="cp">
+                    <input type="text" name="cp" formControlName="cp" [(ngModel)]="selected_client.cp" id="cp" class="client_form_input" placeholder="cp">
                 </div>
             </div>
             <div class="col-span-2 col-start-8">
@@ -108,23 +103,33 @@
         <div class="account_table_section">
             <table class="account_table td_line">
                 <thead>
-                <th colspan="5" class="h-8 tb">Tableau Suivi Compte</th>
+                    <th colspan="5" class="h-8 tb">Tableau Suivi Compte</th>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="account_table_col td_line">Score Global</td>
-                    <td class="account_table_col td_line">Ratios</td>
-                    <td class="account_table_col td_line">Risques</td>
-                    <td class="account_table_col td_line">Status</td>
-                    <td class="account_table_col td_line">Plan d'investissement</td>
-                </tr>
-                <tr>
-                    <td class="account_table_col"><fa-icon [icon]="score_icon" class="account_icon text-yellow-500"></fa-icon></td>
-                    <td class="account_table_col"><fa-icon [icon]="ratio_icon" class="account_icon"></fa-icon></td>
-                    <td class="account_table_col"><fa-icon [icon]="risk_icon" class="account_icon text-red-500"></fa-icon></td>
-                    <td class="account_table_col"><fa-icon [icon]="status_icon" class="account_icon text-green-500"></fa-icon></td>
-                    <td class="account_table_col"><fa-icon [icon]="eye_icon" class="account_icon"></fa-icon></td>
-                </tr>
+                    <tr>
+                        <td class="account_table_col td_line">Score Global</td>
+                        <td class="account_table_col td_line">Ratios</td>
+                        <td class="account_table_col td_line">Risques</td>
+                        <td class="account_table_col td_line">Status</td>
+                        <td class="account_table_col td_line">Plan d'investissement</td>
+                    </tr>
+                    <tr>
+                        <td class="account_table_col">
+                            <fa-icon [icon]="score_icon" class="account_icon text-yellow-500"></fa-icon>
+                        </td>
+                        <td class="account_table_col">
+                            <fa-icon [icon]="ratio_icon" class="account_icon"></fa-icon>
+                        </td>
+                        <td class="account_table_col">
+                            <fa-icon [icon]="risk_icon" class="account_icon text-red-500"></fa-icon>
+                        </td>
+                        <td class="account_table_col">
+                            <fa-icon [icon]="status_icon" class="account_icon text-green-500"></fa-icon>
+                        </td>
+                        <td class="account_table_col">
+                            <fa-icon [icon]="eye_icon" class="account_icon"></fa-icon>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -161,7 +166,7 @@
                         </th>
                         <th class="note_table_col4 td_line">
                             <div class="notes_head_title_container">
-                                <span>Dossier</span>                            
+                                <span>Dossier</span>
                             </div>
                         </th>
                         <th class="note_table_col5 td_line">
@@ -183,7 +188,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let note of selected_client.notes" class="bg-gray-100 text-center border-b text-sm text-gray-600">                        
+                    <tr *ngFor="let note of selected_client.notes" class="bg-gray-100 text-center border-b text-sm text-gray-600">
                         <td class="note_table_col1 td_line">{{ note.creation_date }}</td>
                         <td class="note_table_col2 td_line text-left">{{ note.note }}</td>
                         <td class="note_table_col3 td_line">{{ note.status }}</td>
@@ -198,9 +203,9 @@
                                     <fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon>
                                 </div>
                             </div>
-                         </td>
+                        </td>
                         <td class="note_table_col5 td_line text-left">{{ note.offer }}</td>
-                        <td class="note_table_col6 td_line">{{ note.offer_date }}</td>                            
+                        <td class="note_table_col6 td_line">{{ note.offer_date }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -219,7 +224,7 @@
                         <option value="PENDING">En attente</option>
                         <option value="TREATED">Traite</option>
                     </select>
-                    
+
                 </div>
                 <div class="p-0 flex w-2/12">
                     <select formControlName="document_status" class="note_table_form_element flex-1 text-sm">
@@ -229,7 +234,7 @@
                     </select>
                     <div class="p-1">
                         <label class="cursor-pointer" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
-                        <input formControlName="file" class="hidden" id="file_upload" type="file" />
+                        <input class="hidden" id="file_upload" type="file" (change)="onSelectFile($event)" />
                     </div>
                 </div>
                 <div class="p-0 w-3/12"><input formControlName="offer" class="notes_table_input w-full h-full note_table_form_element" type="text"></div>
@@ -239,7 +244,7 @@
             </form>
         </div>
     </div>
-        
+
     <div class="grid gap-6 grid-cols-6 doc">
         <div class="col-span-4 col-start-1 flex flex-col">
             <div class="grid gap-x-1 gap-y-0 grid-cols-12 p-2 bg-gray-200 mt-20">
@@ -250,7 +255,9 @@
                     <label class="cursor-pointer" for="file_upload1"><fa-icon class="text-lg ml-1 p-1" [icon]="file_upload_icon"></fa-icon></label>
                     <input class="hidden" id="file_upload1" type="file" />
                 </div>
-                <div class="col-span-1 col-start-6"><fa-icon class="doc_icon" [icon]="eye_icon"></fa-icon></div>
+                <div class="col-span-1 col-start-6">
+                    <fa-icon class="doc_icon" [icon]="eye_icon"></fa-icon>
+                </div>
                 <div class="col-span-1 col-start-7">
                     <select name="strategy_status" id="" class="doc_form_element">
                         <option value="correct" selected><fa-icon class="select_icon" [icon]="check_icon"></fa-icon></option>
@@ -263,7 +270,9 @@
                     <label class="cursor-pointer" for="file_upload2"><fa-icon class="text-lg ml-1 p-1" [icon]="file_upload_icon"></fa-icon></label>
                     <input class="hidden" id="file_upload2" type="file" />
                 </div>
-                <div class="col-span-1 col-start-6"><fa-icon class="doc_icon" [icon]="eye_icon"></fa-icon></div>
+                <div class="col-span-1 col-start-6">
+                    <fa-icon class="doc_icon" [icon]="eye_icon"></fa-icon>
+                </div>
                 <div class="col-span-1 col-start-7">
                     <select name="plan_status" id="" class="doc_form_element">
                         <option value="correct" selected><fa-icon class="select_icon" [icon]="check_icon"></fa-icon></option>
