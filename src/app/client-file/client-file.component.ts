@@ -23,7 +23,6 @@ export class ClientFileComponent implements OnInit {
       note: '',
       status: '',
       document_status: '',
-      file: null,
       filename: '',
       offer: '',
       offer_date: '',
@@ -48,16 +47,35 @@ export class ClientFileComponent implements OnInit {
      treated: "TREATED"
    }
 
+   file:any;
+   filename: string = '';
+
+   onSelectFile(event: any){
+     this.file = event.target.files[0];
+   }
+
    onSubmit(){
     console.warn('Submitted client form: ', this.clientInfo.value);
     console.warn('Submitted selected client form: ', this.selected_client);
     let today = new Date().toLocaleDateString();
     this.noteForm.value.creation_date = this.datepipe.transform(today, 'dd-MM-yyyy');
     this.noteForm.value.offer_date = this.datepipe.transform(this.noteForm.value.offer_date, 'dd-MM-yyyy');
+
+    // this.noteForm.value.file = this.file;
+    // this.noteForm.value.filename = this.file.;
+    
+    // this.noteForm.value.file = this.noteForm.value.file.data;
+
+    if(this.file !== null && this.file !== undefined){
+      this.uploadFile(this.file);
+      this.noteForm.value.filename = this.filename;
+      console.log('uploaded file name: ' + this.filename);
+      this.filename = '';
+    }
     console.warn('Submitted note form: ', this.noteForm.value);
     // this.getClients;
-    this.selected_client.notes.push(this.noteForm.value);
     this.addClient(this.selected_client);
+    this.selected_client.notes.push(this.noteForm.value);
     this.noteForm.reset();
    }
 
@@ -102,6 +120,14 @@ export class ClientFileComponent implements OnInit {
 
   updateClient(client: Client): void {
     this.clientService.updateClient(client);
+  }
+
+  uploadFile(file:File): void {
+    this.clientService.uploadNoteDoc(file).subscribe(filename => this.filename = filename);
+  }
+
+  downloadFile(filename: string): void {
+    this.clientService.downloadNoteDoc(filename);
   }
 
 
@@ -187,49 +213,6 @@ export class ClientFileComponent implements OnInit {
   ratio_icon = faCertificate;
   risk_icon = faCloudMoonRain;
   status_icon = faCircle;
-
-  client: Client = {
-    id: "",
-    name: "Riyad",
-    profession: "Student",
-    category: "Engineer", 
-    tel: "671090017",
-    email: "mail@mail.com", 
-    address: "Street 5",
-    town: "Adamawa",
-    linkedIn_link: "linked.com/riyad",
-    cp: "8990",
-    notation: 1,
-    notes: [
-      {
-        creation_date: "2021-09-13",
-        note: "First note",
-        status: "PENDING",
-        document_status: "PENDING",
-        file: new File([''], '', {}),
-        filename: "/assets/file",
-        offer: "New money demand",
-        offer_date: "2020-08-12"
-      },
-      {
-        creation_date: "2021-09-05",
-        note: "Second note",
-        status: "INPROGRESS",
-        document_status: "PENDING",
-        file: new File([''], '', {}),
-        filename: "/assets/file",
-        offer: "New money demand",
-        offer_date: "2020-08-12"
-      }
-    ],
-    account: {
-      score: 2,
-      ratio: 2,
-      risk: 2,
-      status: Status.PENDING,
-      investment_plan: "continous"
-    }
-  } ;
 
   constructor(private clientService: ClientService, private formBuilder: FormBuilder, private datepipe: DatePipe) { 
     this.getClients();

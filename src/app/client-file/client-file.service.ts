@@ -13,10 +13,10 @@ export class ClientService {
   constructor(private http: HttpClient) { }
 
 
-  private clientUrl = 'https://client-file.herokuapp.com/risk-management/client';
-  // private clientUrl = 'http://localhost:8085/risk-management/client';
+  // private clientUrl = 'https://client-file.herokuapp.com/risk-management/client';
+  private clientUrl = 'http://localhost:8085/risk-management/client';
 
-  private noteDocUrl = this.clientUrl + 'note/file/';
+  private noteDocUrl = this.clientUrl + '/note/file';
 
   getClients(): Observable<Client[]> {
       return this.http.get<Client[]>(this.clientUrl, {headers}).pipe(
@@ -39,8 +39,19 @@ export class ClientService {
     );
 }
 
+uploadNoteDoc(file: File): Observable<any> {
+  const data: FormData = new FormData();
+  data.append('file', file);
+
+  return this.http.post(this.noteDocUrl, data, { responseType: 'text'}).pipe(
+    tap(_ => console.log('uploading note doc clients')),
+    catchError(this.handleError<Client>('uploadingNoteDoc'))
+  );
+
+}
+
 downloadNoteDoc(filename: String): Observable<any> {
-  return this.http.get(this.noteDocUrl + filename, {headers}).pipe(
+  return this.http.get(this.noteDocUrl + '/' + filename, {headers}).pipe(
     tap(_ => console.log('downloading note doc clients')),
     catchError(this.handleError<Client>('downloadNoteDoc'))
   );

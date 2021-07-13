@@ -60,7 +60,6 @@ export interface Note {
     note: string,
     status: string,
     document_status: string,
-    file: File,
     filename: string,
     offer: string,
     offer_date: string
