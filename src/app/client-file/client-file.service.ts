@@ -32,18 +32,13 @@ export class ClientService {
       );
   }
 
-  updateClient(client: Client): Observable<Client> {
-    return this.http.put<Client>(this.clientUrl, client, {headers}).pipe(
-      tap(_ => console.log('update clients')),
-      catchError(this.handleError<Client>('updateClients'))
-    );
-}
+  
 
 uploadNoteDoc(file: File): Observable<any> {
   const data: FormData = new FormData();
   data.append('file', file);
 
-  return this.http.post(this.noteDocUrl, data, { responseType: 'text'}).pipe(
+  return this.http.post(this.noteDocUrl, data).pipe(
     tap(_ => console.log('uploading note doc clients')),
     catchError(this.handleError<Client>('uploadingNoteDoc'))
   );

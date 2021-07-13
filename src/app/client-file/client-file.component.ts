@@ -54,7 +54,17 @@ export class ClientFileComponent implements OnInit {
      this.file = event.target.files[0];
    }
 
-   onSubmit(){
+   noteSubmittion(){
+    if(this.client_selected_name !== '' && this.client_selected_name === this.selected_client.name){
+      console.log('updating client');
+      this.updateClient(this.selected_client);
+    } else {
+      console.log('adding client');
+      this.addClient(this.selected_client);
+    }
+   }
+
+    onSubmit(){
     console.warn('Submitted client form: ', this.clientInfo.value);
     console.warn('Submitted selected client form: ', this.selected_client);
     let today = new Date().toLocaleDateString();
@@ -66,16 +76,25 @@ export class ClientFileComponent implements OnInit {
     
     // this.noteForm.value.file = this.noteForm.value.file.data;
 
+    
     if(this.file !== null && this.file !== undefined){
-      this.uploadFile(this.file);
-      this.noteForm.value.filename = this.filename;
-      console.log('uploaded file name: ' + this.filename);
-      this.filename = '';
+      this.clientService.uploadNoteDoc(this.file).subscribe(respons => {
+        console.log('file upload response and filename: ' + respons + ' <-> ' + respons.filename);
+        this.noteForm.value.filename = respons.filename;
+        
+        console.warn('Submitted note form: ', this.noteForm.value);
+        this.selected_client.notes.push(this.noteForm.value);
+        this.noteSubmittion();
+      });
+    } else {
+      console.warn('Submitted note form: ', this.noteForm.value);
+      this.selected_client.notes.push(this.noteForm.value);
+      this.noteSubmittion();
     }
-    console.warn('Submitted note form: ', this.noteForm.value);
     // this.getClients;
-    this.addClient(this.selected_client);
-    this.selected_client.notes.push(this.noteForm.value);
+    
+    // this.setSelectedClient(this.client_selected_name);
+    // this.selected_client.notes.push(this.noteForm.value);
     this.noteForm.reset();
    }
 
@@ -114,16 +133,19 @@ export class ClientFileComponent implements OnInit {
     });
   }
 
-  addClient(client: Client): void {
+  addClient(client: Client) {
     this.clientService.postClient(client).subscribe(client => this.clients.push(client));
   }
 
-  updateClient(client: Client): void {
-    this.clientService.updateClient(client);
+  updateClient(client: Client) {
+    this.clientService.postClient(client).subscribe(client => this.selected_client = client);
   }
 
-  uploadFile(file:File): void {
-    this.clientService.uploadNoteDoc(file).subscribe(filename => this.filename = filename);
+  uploadFile(file:File) {
+    this.clientService.uploadNoteDoc(file).subscribe(respons => {
+      console.log('file upload response and filename: ' + respons + ' <-> ' + respons.filename);
+      this.filename = respons.filename;
+    });
   }
 
   downloadFile(filename: string): void {
@@ -135,6 +157,8 @@ export class ClientFileComponent implements OnInit {
 
   clients_name: string[] = [];
 
+  client_selected_name:string = '';
+
   filteredClients: Observable<string[]> = this.control.valueChanges.pipe(startWith(''),
     map(value => this._filter(value)));
   
@@ -145,6 +169,7 @@ export class ClientFileComponent implements OnInit {
     } else {
       this.selected_client = this.empty_client ;
     }
+    this.client_selected_name = value;
     const filterValue = this._normalizeValue(value);
     return this.clients_name.filter(client => this._normalizeValue(client).includes(filterValue));
   }
@@ -234,6 +259,14 @@ export class ClientFileComponent implements OnInit {
       this.clients_name.push(client.name);
     }
   }
+
+  // setSelectedClient(name:string): void{
+  //   for(let client of this.clients){
+  //     if(client.name === name){
+  //       this.selected_client = client;
+  //     }
+  //   }
+  // }
 
 
 }

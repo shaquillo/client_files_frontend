@@ -82,6 +82,10 @@ export interface Client {
 
 }
 
+// export interface FilenameI {
+//     filenam: string
+// }
+
 
 // export class AccountC implements Account{
 //     constructor(
