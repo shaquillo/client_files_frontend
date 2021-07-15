@@ -31,6 +31,7 @@
     "file-saver": "^2.0.5",
     "highcharts": "^9.1.2",
     "highcharts-angular": "^2.10.0",
+    "ngx-smart-popover": "^1.4.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

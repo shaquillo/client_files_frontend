@@ -115,13 +115,67 @@
                     </tr>
                     <tr>
                         <td class="account_table_col">
-                            <fa-icon [icon]="score_icon" class="account_icon text-yellow-500"></fa-icon>
+                            <div [popover]="scorePopover"
+                                popoverPlacement="bottom"
+                                [popoverOnHover]="true"
+                                [popoverCloseOnClickOutside]="false"
+                                [popoverCloseOnMouseOutside]="true"
+                                [popoverDisabled]="false"
+                                [popoverAnimation]="true"
+                                [popoverDismissTimeout]="10000">
+                                <fa-icon [icon]="scoreIcon" class="account_icon" [ngClass]="scoreColor"></fa-icon>
+                            </div>
+                            <popover-content #scorePopover
+                                [closeOnMouseOutside]="true" 
+                                [closeOnClickOutside]="true"> 
+                                <div class="absolute shadow bg-indigo-200">
+                                    <button (click)="scoreIcon=score_icon; scoreColor='text-yellow-500'"><fa-icon [icon]="score_icon" class="account_icon text-yellow-500 m-2"></fa-icon></button>
+                                    <button (click)="scoreIcon=ratio_icon; scoreColor='text-black-500'"><fa-icon [icon]="ratio_icon" class="account_icon m-2"></fa-icon></button>
+                                    <button (click)="scoreIcon=risk_icon; scoreColor='text-red-500'"><fa-icon [icon]="risk_icon" class="account_icon text-red-500 m-2"></fa-icon></button>
+                                </div>
+                            </popover-content>
                         </td>
                         <td class="account_table_col">
-                            <fa-icon [icon]="ratio_icon" class="account_icon"></fa-icon>
+                            <div [popover]="ratioPopover"
+                                popoverPlacement="bottom"
+                                [popoverOnHover]="true"
+                                [popoverCloseOnClickOutside]="false"
+                                [popoverCloseOnMouseOutside]="true"
+                                [popoverDisabled]="false"
+                                [popoverAnimation]="true"
+                                [popoverDismissTimeout]="10000">
+                                <fa-icon [icon]="ratioIcon" class="account_icon" [ngClass]="ratioColor"></fa-icon>
+                            </div>
+                            <popover-content #ratioPopover
+                                [closeOnMouseOutside]="true" 
+                                [closeOnClickOutside]="true"> 
+                                <div class="absolute shadow bg-indigo-200">
+                                    <button (click)="ratioIcon=score_icon; ratioColor='text-yellow-500'"><fa-icon [icon]="score_icon" class="account_icon text-yellow-500 m-2"></fa-icon></button>
+                                    <button (click)="ratioIcon=ratio_icon; ratioColor='text-black-500'"><fa-icon [icon]="ratio_icon" class="account_icon m-2"></fa-icon></button>
+                                    <button (click)="ratioIcon=risk_icon; ratioColor='text-red-500'"><fa-icon [icon]="risk_icon" class="account_icon text-red-500 m-2"></fa-icon></button>
+                                </div>
+                            </popover-content>
                         </td>
                         <td class="account_table_col">
-                            <fa-icon [icon]="risk_icon" class="account_icon text-red-500"></fa-icon>
+                            <div [popover]="riskPopover"
+                                popoverPlacement="left"
+                                [popoverOnHover]="true"
+                                [popoverCloseOnClickOutside]="false"
+                                [popoverCloseOnMouseOutside]="true"
+                                [popoverDisabled]="false"
+                                [popoverAnimation]="true"
+                                [popoverDismissTimeout]="10000">
+                                <fa-icon [icon]="riskIcon" class="account_icon" [ngClass]="riskColor"></fa-icon>
+                            </div>
+                            <popover-content #riskPopover
+                                [closeOnMouseOutside]="true" 
+                                [closeOnClickOutside]="true"> 
+                                <div class="absolute shadow bg-indigo-200">
+                                    <button (click)="riskIcon=score_icon; riskColor='text-yellow-500'"><fa-icon [icon]="score_icon" class="account_icon text-yellow-500 m-2"></fa-icon></button>
+                                    <button (click)="riskIcon=ratio_icon; riskColor='text-black-500'"><fa-icon [icon]="ratio_icon" class="account_icon m-2"></fa-icon></button>
+                                    <button (click)="riskIcon=risk_icon; riskColor='text-red-500'"><fa-icon [icon]="risk_icon" class="account_icon text-red-500 m-2"></fa-icon></button>
+                                </div>
+                            </popover-content>
                         </td>
                         <td class="account_table_col">
                             <fa-icon [icon]="status_icon" class="account_icon text-green-500"></fa-icon>
@@ -135,80 +189,82 @@
         </div>
 
         <div class="notes_section">
-            <table class="w-full td_line bg-gray-300">
-                <thead>
-                    <th colspan="6" class="h-8">
-                        Notes
-                    </th>
-                </thead>
-                <thead>
-                    <tr class="notes_table_head2">
-                        <th class="note_table_col1 td_line">
-                            <div class="notes_head_title_container">
-                                <span class="notes_head_title2">Date</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="w-full text-center font-bold border border-black bg-gray-300 h-8">Notes</div>
+            <div class="note_table_contain">
+                <table class="w-full td_line bg-gray-300 note_table">
+                    <thead class="">
+                        <tr class="notes_table_head2">
+                            <th class="note_table_col1 td_line">
+                                <div class="notes_head_title_container">
+                                    <span class="notes_head_title2">Date</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
-                            </div>
-                        </th>
-                        <th class="note_table_col2 td_line">
-                            <div class="notes_head_title_container">
-                                <span>Note</span>
-                            </div>
-                        </th>
-                        <th class="note_table_col3 td_line">
-                            <div class="notes_head_title_container">
-                                <span class="notes_head_title2">Status</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
-                            </div>
-                        </th>
-                        <th class="note_table_col4 td_line">
-                            <div class="notes_head_title_container">
-                                <span>Dossier</span>
-                            </div>
-                        </th>
-                        <th class="note_table_col5 td_line">
-                            <div class="notes_head_title_container">
-                                <span class="notes_head_title2">Offre</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
-                            </div>
-                        </th>
-                        <th class="note_table_col6 td_line">
-                            <div class="notes_head_title_container">
-                                <span class="notes_head_title2">Date</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let note of selected_client.notes" class="bg-gray-100 text-center border-b text-sm text-gray-600">
-                        <td class="note_table_col1 td_line">{{ note.creation_date }}</td>
-                        <td class="note_table_col2 td_line text-left">{{ note.note }}</td>
-                        <td class="note_table_col3 td_line">{{ note.status }}</td>
-                        <td class="note_table_col4 td_line">
-                            <div class="flex">
-                                <div class="mr-auto">
-                                    {{ note.document_status }}
                                 </div>
-                                <div *ngIf="note.document_status === status.treated" class="flex">
-                                    <label class="cursor-pointer mr-2" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
-                                    <input class="hidden w-0" id="file_upload" type="file" />
-                                    <button (click)="downloadFile(note.filename)"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></button>
+                            </th>
+                            <th class="note_table_col2 td_line">
+                                <div class="notes_head_title_container">
+                                    <span>Note</span>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="note_table_col5 td_line text-left">{{ note.offer }}</td>
-                        <td class="note_table_col6 td_line">{{ note.offer_date }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                            </th>
+                            <th class="note_table_col3 td_line">
+                                <div class="notes_head_title_container">
+                                    <span class="notes_head_title2">Status</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                                </div>
+                            </th>
+                            <th class="note_table_col4 td_line">
+                                <div class="notes_head_title_container">
+                                    <span>Dossier</span>
+                                </div>
+                            </th>
+                            <th class="note_table_col5 td_line">
+                                <div class="notes_head_title_container">
+                                    <span class="notes_head_title2">Offre</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                                </div>
+                            </th>
+                            <th class="note_table_col6 td_line">
+                                <div class="notes_head_title_container">
+                                    <span class="notes_head_title2">Date</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <!-- <div class="note_table_contain w-full" > -->
+                        <tbody>
+                        
+                            <tr *ngFor="let note of selected_client.notes" class="note_table_row">
+                                <td class="note_table_col1 td_line">{{ note.creation_date }}</td>
+                                <td class="note_table_col2 td_line text-left">{{ note.note }}</td>
+                                <td class="note_table_col3 td_line">{{ note.status }}</td>
+                                <td class="note_table_col4 td_line">
+                                    <div class="flex">
+                                        <div class="mr-auto">
+                                            {{ note.document_status }}
+                                        </div>
+                                        <div *ngIf="note.document_status === status.treated" class="flex">
+                                            <label class="cursor-pointer mr-2" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
+                                            <input class="hidden w-0" id="file_upload" type="file" />
+                                            <button (click)="downloadFile(note.filename)"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="note_table_col5 td_line text-left">{{ note.offer }}</td>
+                                <td class="note_table_col6 td_line">{{ note.offer_date }}</td>
+                            </tr>
+                        
+                        </tbody>
+                    <!-- </div> -->
+                </table>
+            </div>
 
             <form [formGroup]="noteForm" (ngSubmit)="onSubmit()" class="pt-0 h-8 bg-white w-full flex">
                 <div class="w-2/12">

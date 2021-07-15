@@ -7,7 +7,7 @@
 }
 
 .client_form_input {
-    @apply  block border focus:border-indigo-600 rounded-md sm:text-sm border-gray-500 h-8 w-full;
+    @apply block border focus:border-indigo-600 rounded-md sm:text-sm border-gray-500 h-8 w-full;
 }
 
 .client_form_label {
@@ -22,7 +22,7 @@
     @apply table-fixed w-3/5;
 }
 
-.account_table_col{
+.account_table_col {
     @apply w-1/5 text-center h-14 p-1;
 }
 
@@ -31,15 +31,15 @@
 }
 
 .td_line {
-    border: 1px solid black;
+    @apply border border-black;
 }
 
 .notes_section {
-    @apply mt-6 w-full px-8 ; 
+    @apply mt-6 w-full px-8;
 }
 
 .notes_table_head2 {
-    @apply bg-gray-300 border;
+    @apply bg-gray-300 border border-black h-8;
 }
 
 .notes_table_head2_title {
@@ -55,14 +55,14 @@
 }
 
 .notes_table_cell {
-    @apply p-1 border border-black;
+    @apply p-1 border-l border-r border-t border-black;
 }
 
 .notes_table_input {
     @apply border-black focus:outline-none focus:border-black !important;
 }
 
-.note_table_form_element{
+.note_table_form_element {
     @apply h-9 border border-black;
 }
 
@@ -90,7 +90,10 @@
     @apply w-1/12;
 }
 
-
+.note_table_contain {
+    max-height: 87px;
+    @apply w-full overflow-y-auto;
+}
 
 .doc {
     @apply mt-8;
@@ -116,4 +119,3 @@
     height: 300px;
     @apply w-full block;
 }
-

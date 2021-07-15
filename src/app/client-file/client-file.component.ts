@@ -160,6 +160,8 @@ export class ClientFileComponent implements OnInit {
 
   }
 
+  displayedColumns: string[] = ['date', 'note', 'status', 'document_status', 'offer', 'offer_date']
+
 
   control = new FormControl();
 
@@ -243,6 +245,15 @@ export class ClientFileComponent implements OnInit {
   ratio_icon = faCertificate;
   risk_icon = faCloudMoonRain;
   status_icon = faCircle;
+
+  scoreIcon = this.score_icon;
+  ratioIcon = this.ratio_icon;
+  riskIcon = this.risk_icon;
+
+  scoreColor = 'text-yellow-500';
+  ratioColor  = 'text-black-500';
+  riskColor = 'text-red-500';
+
 
   constructor(private clientService: ClientService, private formBuilder: FormBuilder, private datepipe: DatePipe) { 
     this.getClients();
