@@ -55,22 +55,23 @@ export class ClientFileComponent implements OnInit {
      console.log(this.file);
    }
 
-   noteSubmittion(){
-    if(this.client_selected_name !== '' && this.client_selected_name === this.selected_client.name){
-      console.log('updating client');
-      this.updateClient(this.selected_client);
-    } else {
-      console.log('adding client');
-      this.addClient(this.selected_client);
-    }
+  //  noteSubmittion(){
+  //   if(this.client_selected_name !== '' && this.client_selected_name === this.selected_client.name){
+  //     console.log('updating client');
+  //     this.updateClient(this.selected_client);
+  //   } else {
+  //     console.log('adding client');
+  //     this.addClient(this.selected_client);
+  //   }
     
-    this.noteForm.reset();
-    this.getClients();
-   }
+    
+  //  }
+
 
     onSubmit(){
     console.warn('Submitted client form: ', this.clientInfo.value);
     console.warn('Submitted selected client form: ', this.selected_client);
+    console.log(this.selected_client);
     let today = new Date().toLocaleDateString();
     this.noteForm.value.creation_date = this.datepipe.transform(today, 'dd-MM-yyyy');
     this.noteForm.value.offer_date = this.datepipe.transform(this.noteForm.value.offer_date, 'dd-MM-yyyy');
@@ -89,12 +90,16 @@ export class ClientFileComponent implements OnInit {
         
         console.warn('Submitted note form: ', this.noteForm.value);
         this.selected_client.notes.push(this.noteForm.value);
-        this.noteSubmittion();
+        this.addClient(this.selected_client);
+        // this.noteForm.reset();
+        this.getClients();
       });
     } else {
       console.warn('Submitted note form: ', this.noteForm.value);
       this.selected_client.notes.push(this.noteForm.value);
-      this.noteSubmittion();
+      this.addClient(this.selected_client);
+      // this.noteForm.reset();
+      this.getClients();
     }
     // this.getClients;
     
@@ -139,7 +144,11 @@ export class ClientFileComponent implements OnInit {
 
   addClient(client: Client) {
     this.clientService.postClient(client).subscribe(client => {
-      this.clients.push(client)
+      this.clients.push(client);
+      this.selected_client = client;
+      console.log('selected client: ' + this.selected_client);
+      console.log('returned client: ' + client);
+      // this.empty_client = client;
       // this.added_client_name = client.name;
       // this.setSelectedClient(this.added_client_name);
     });
@@ -165,7 +174,6 @@ export class ClientFileComponent implements OnInit {
 
   clients_name: string[] = [];
 
-  client_selected_name:string = '';
   // added_client_name:string = '';
 
   filteredClients: Observable<string[]> = this.control.valueChanges.pipe(startWith(''),
@@ -175,10 +183,7 @@ export class ClientFileComponent implements OnInit {
     let client_to_select = this.clients.find(client => client.name === value);
     if( client_to_select !== undefined){
       this.selected_client = client_to_select;
-    } else {
-      this.selected_client = this.empty_client ;
     }
-    this.client_selected_name = value;
     const filterValue = this._normalizeValue(value);
     return this.clients_name.filter(client => this._normalizeValue(client).includes(filterValue));
   }
@@ -269,13 +274,13 @@ export class ClientFileComponent implements OnInit {
     }
   }
 
-  setSelectedClient(name:string): void{
-    for(let client of this.clients){
-      if(client.name === name){
-        this.selected_client = client;
-      }
-    }
-  }
+  // setSelectedClient(name:string): void{
+  //   for(let client of this.clients){
+  //     if(client.name === name){
+  //       this.selected_client = client;
+  //     }
+  //   }
+  // }
 
 
 }

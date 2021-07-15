@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpEvent } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, retry, map, tap } from 'rxjs/operators';
 import { Client } from './client-file.client';
@@ -45,10 +45,10 @@ uploadNoteDoc(file: File): Observable<any> {
 
 }
 
-downloadNoteDoc(filename: String): Observable<any> {
-  return this.http.get(this.noteDocUrl + '/' + filename, {headers}).pipe(
+downloadNoteDoc(filename: String): Observable<HttpEvent<Blob>>{
+  return this.http.get(this.noteDocUrl + '/' + filename, {observe: 'events', responseType: 'blob'}).pipe(
     tap(_ => console.log('downloading note doc clients')),
-    catchError(this.handleError<Client>('downloadNoteDoc'))
+    catchError(this.handleError<HttpEvent<Blob>>('downloadNoteDoc'))
   );
 }
 
