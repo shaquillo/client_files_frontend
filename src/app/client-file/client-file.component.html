@@ -200,7 +200,7 @@
                                 <div *ngIf="note.document_status === status.treated" class="flex">
                                     <label class="cursor-pointer mr-2" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
                                     <input class="hidden w-0" id="file_upload" type="file" />
-                                    <fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon>
+                                    <button (click)="downloadFile(note.filename)"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></button>
                                 </div>
                             </div>
                         </td>
@@ -243,6 +243,7 @@
                 </div>
             </form>
         </div>
+
     </div>
 
     <div class="grid gap-6 grid-cols-6 doc">

@@ -9,6 +9,7 @@ import * as Highcharts from "highcharts";
 import {Account, Note, Client, Status} from './client-file.client';
 import { ClientService } from './client-file.service';
 import { DatePipe } from '@angular/common';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-client-file',
@@ -52,6 +53,7 @@ export class ClientFileComponent implements OnInit {
 
    onSelectFile(event: any){
      this.file = event.target.files[0];
+     console.log(this.file);
    }
 
    onSubmit(){
@@ -67,21 +69,41 @@ export class ClientFileComponent implements OnInit {
     // this.noteForm.value.file = this.noteForm.value.file.data;
 
     if(this.file !== null && this.file !== undefined){
-      this.uploadFile(this.file);
-      this.noteForm.value.filename = this.filename;
-      console.log('uploaded file name: ' + this.filename);
-      this.filename = '';
+      this.clientService.uploadNoteDoc(this.file).subscribe(respons => {
+        console.log('file upload response and filename: ' + respons + ' <-> ' + respons.filename);
+        this.noteForm.value.filename = respons.filename;
+        this.noteForm.value.document_status = this.status.treated;
+        
+        console.warn('Submitted note form: ', this.noteForm.value);
+        this.selected_client.notes.push(this.noteForm.value);
+        this.addClient(this.selected_client);
+        this.noteForm.reset();     
+      });
+    } else {
+      console.warn('Submitted note form: ', this.noteForm.value);
+      this.noteForm.value.document_status = this.status.inprogress;
+      this.selected_client.notes.push(this.noteForm.value);
+      this.addClient(this.selected_client);
+      this.noteForm.reset();
     }
-    console.warn('Submitted note form: ', this.noteForm.value);
-    // this.getClients;
-    this.addClient(this.selected_client);
-    this.selected_client.notes.push(this.noteForm.value);
-    this.noteForm.reset();
+
+    // if(this.file !== null && this.file !== undefined){
+    //   this.uploadFile(this.file);
+    //   this.noteForm.value.filename = this.filename;
+    //   console.log('uploaded file name: ' + this.filename);
+    //   this.filename = '';
+    // }
+    // console.warn('Submitted note form: ', this.noteForm.value);
+    // // this.getClients;
+    // this.selected_client.notes.push(this.noteForm.value);
+    
    }
 
   clients: Client[] = [];
 
   selected_client: Client;
+  added_client: Client;
+  tmp_client: Client;
 
   empty_client: Client = {
     id: "",
@@ -118,16 +140,24 @@ export class ClientFileComponent implements OnInit {
     this.clientService.postClient(client).subscribe(client => this.clients.push(client));
   }
 
-  updateClient(client: Client): void {
-    this.clientService.updateClient(client);
-  }
+  // updateClient(client: Client): void {
+  //   this.clientService.updateClient(client);
+  // }
 
   uploadFile(file:File): void {
     this.clientService.uploadNoteDoc(file).subscribe(filename => this.filename = filename);
   }
 
   downloadFile(filename: string): void {
-    this.clientService.downloadNoteDoc(filename);
+    this.clientService.downloadNoteDoc(filename).subscribe( (file: any) => {
+      let blob:any = new Blob([file], { type: 'application/pdf' });
+      console.log(blob);
+      let url = window.URL.createObjectURL(blob);
+      window.open(url);
+      // fileSaver.saveAs(blob, filename);
+      }
+    );
+
   }
 
 
@@ -217,6 +247,9 @@ export class ClientFileComponent implements OnInit {
   constructor(private clientService: ClientService, private formBuilder: FormBuilder, private datepipe: DatePipe) { 
     this.getClients();
     this.selected_client = this.empty_client;
+    this.added_client = this.empty_client;
+    this.tmp_client = this.empty_client;
+
     // this.client = this.clients[0];
     // console.log("clients: " + this.clients.length);
   }
