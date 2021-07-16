@@ -115,7 +115,8 @@
                     </tr>
                     <tr>
                         <td class="account_table_col">
-                            <div [popover]="scorePopover"
+                            <div [ngSwitch]="account_table.score"
+                                [popover]="scorePopover"
                                 popoverPlacement="bottom"
                                 [popoverOnHover]="true"
                                 [popoverCloseOnClickOutside]="false"
@@ -222,10 +223,11 @@
                                 <div class="mr-auto">
                                     {{element.document_status}}
                                 </div>
-                                <div *ngIf="element.document_status === status.treated" class="flex">
+                                <div *ngIf="element.filename !== '' && element.filename !== null" class="flex">
                                     <label class="cursor-pointer mr-2" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
                                     <input class="hidden w-0" id="file_upload" type="file" />
-                                    <button (click)="downloadFile(element.filename)"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></button>
+                                    <!-- <button (click)="downloadFile(element.filename)"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></button> -->
+                                    <a target="_blank" [href]="'https://client-file.herokuapp.com/risk-management/client/note/file/' + element.filename"><fa-icon class="text-lg ml-1 mr-1" [icon]="search_icon"></fa-icon></a>
                                 </div>
                             </div>
                         </td>
@@ -260,11 +262,6 @@
                         <option value="PENDING">En attente</option>
                         <option value="TREATED">Traite</option>
                     </select>
-                    <!-- <ng-select formControlName="status" class="w-full">
-                        <ng-option [value]="status.inprogress">{{status.inprogress}}</ng-option>
-                        <ng-option [value]="status.pending">{{status.pending}}</ng-option>
-                        <ng-option [value]="status.treated">{{status.treated}}</ng-option>
-                     </ng-select> -->
 
                 </div>
                 <div class="p-0 flex w-2/12">
@@ -274,8 +271,8 @@
                         <option value="TREATED">Traite</option>
                     </select>
                     <div class="p-1">
-                        <label class="cursor-pointer" for="file_upload"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
-                        <input class="hidden" id="file_upload" type="file" (change)="onSelectFile($event)" />
+                        <label class="cursor-pointer" for="file_upload1"><fa-icon class="text-lg ml-1" [icon]="file_upload_icon"></fa-icon></label>
+                        <input class="hidden" id="file_upload1" type="file" (change)="onSelectFile($event)" />
                     </div>
                 </div>
                 <div class="p-0 w-3/12"><input formControlName="offer" placeholder="offer" class="notes_table_input w-full h-full note_table_form_element" type="text"></div>

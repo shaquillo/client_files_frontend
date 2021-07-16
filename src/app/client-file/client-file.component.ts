@@ -70,11 +70,14 @@ export class ClientFileComponent implements OnInit {
     
     // this.noteForm.value.file = this.noteForm.value.file.data;
 
+    this.selected_client.account.score = this.account_table.score;
+    this.selected_client.account.ratio = this.account_table.ratio;
+    this.selected_client.account.risk = this.account_table.risk;
+
     if(this.file !== null && this.file !== undefined){
       this.clientService.uploadNoteDoc(this.file).subscribe(respons => {
         console.log('file upload response and filename: ' + respons + ' <-> ' + respons.filename);
         this.noteForm.value.filename = respons.filename;
-        this.noteForm.value.document_status = this.status.treated;
         
         console.warn('Submitted note form: ', this.noteForm.value);
         this.selected_client.notes.push(this.noteForm.value);
@@ -84,7 +87,6 @@ export class ClientFileComponent implements OnInit {
       });
     } else {
       console.warn('Submitted note form: ', this.noteForm.value);
-      this.noteForm.value.document_status = this.status.inprogress;
       this.selected_client.notes.push(this.noteForm.value);
       this.addClient(this.selected_client);
       this.datasource.data = this.selected_client.notes;
@@ -108,6 +110,12 @@ export class ClientFileComponent implements OnInit {
   selected_client: Client;
   added_client: Client;
   tmp_client: Client;
+
+  account_table = {
+    score: 0,
+    ratio: 0,
+    risk: 0
+  }
 
   empty_client: Client = {
     id: "",
@@ -154,10 +162,11 @@ export class ClientFileComponent implements OnInit {
 
   downloadFile(filename: string): void {
     this.clientService.downloadNoteDoc(filename).subscribe( (file: any) => {
-      let blob:any = new Blob([file], { type: 'application/pdf' });
-      console.log(blob);
-      let url = window.URL.createObjectURL(blob);
-      window.open(url);
+      console.log(file);
+      // let blob:any = new Blob([file], { type: 'application/pdf' });
+      // console.log(blob);
+      // let url = window.URL.createObjectURL(file.body);
+      // window.open(url);
       // fileSaver.saveAs(blob, filename);
       }
     );
