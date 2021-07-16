@@ -19,6 +19,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { PopoverModule } from 'ngx-smart-popover';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { PopoverModule } from 'ngx-smart-popover';
     ReactiveFormsModule,
     HighchartsChartModule,
     HttpClientModule,
-    PopoverModule
+    PopoverModule,
+    NgSelectModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -10,6 +10,7 @@ import {Account, Note, Client, Status} from './client-file.client';
 import { ClientService } from './client-file.service';
 import { DatePipe } from '@angular/common';
 import * as fileSaver from 'file-saver';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-client-file',
@@ -50,6 +51,7 @@ export class ClientFileComponent implements OnInit {
 
    file:any;
    filename: string = '';
+   datasource = new  MatTableDataSource<Note>();
 
    onSelectFile(event: any){
      this.file = event.target.files[0];
@@ -77,6 +79,7 @@ export class ClientFileComponent implements OnInit {
         console.warn('Submitted note form: ', this.noteForm.value);
         this.selected_client.notes.push(this.noteForm.value);
         this.addClient(this.selected_client);
+        this.datasource.data = this.selected_client.notes;
         this.noteForm.reset();     
       });
     } else {
@@ -84,6 +87,7 @@ export class ClientFileComponent implements OnInit {
       this.noteForm.value.document_status = this.status.inprogress;
       this.selected_client.notes.push(this.noteForm.value);
       this.addClient(this.selected_client);
+      this.datasource.data = this.selected_client.notes;
       this.noteForm.reset();
     }
 
@@ -174,8 +178,10 @@ export class ClientFileComponent implements OnInit {
     let client_to_select = this.clients.find(client => client.name === value);
     if( client_to_select !== undefined){
       this.selected_client = client_to_select;
+      this.datasource.data = this.selected_client.notes;
     } else {
       this.selected_client = this.empty_client ;
+      this.datasource.data = [];
     }
     const filterValue = this._normalizeValue(value);
     return this.clients_name.filter(client => this._normalizeValue(client).includes(filterValue));
